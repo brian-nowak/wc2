@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 48 Gaffers — World Cup 2026 Managers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+<style>
+  :root{--pitch:#0e3b2e;--pitch-deep:#092820;--chalk:#f4f1e6;--gold:#c9a24b;--card:#fffdf6;--ink:#17251f;--muted:#5d6d64;--alert:#b33a3a}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--pitch);background-image:repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 120px, rgba(0,0,0,0.05) 120px 240px);color:var(--chalk);font-family:'IBM Plex Sans',system-ui,sans-serif}
+  header{text-align:center;padding:56px 20px 30px;border-bottom:3px solid var(--gold);background:var(--pitch-deep)}
+  .eyebrow{font-family:'Barlow Condensed',sans-serif;letter-spacing:.35em;text-transform:uppercase;font-size:14px;color:var(--gold);font-weight:600}
+  h1{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(44px,8vw,84px);line-height:.95;text-transform:uppercase;margin:10px 0 8px}
+  header p{color:#c8d2c9;font-size:15px;max-width:560px;margin:0 auto}
+  .toolbar{max-width:1200px;margin:0 auto;padding:20px 18px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .hint{font-size:12.5px;color:#9fb0a4;font-family:'Barlow Condensed',sans-serif;letter-spacing:.1em;text-transform:uppercase}
+  .btn{font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.1em;font-size:13px;color:var(--pitch-deep);background:var(--gold);border:none;border-radius:5px;padding:8px 14px;cursor:pointer}
+  .btn:active{transform:translateY(1px)}
+  main{max-width:1200px;margin:0 auto;padding:18px 18px 6px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:16px}
+  .card{background:var(--card);color:var(--ink);border-radius:6px;padding:8px 8px 12px;border:1px solid rgba(0,0,0,.15);box-shadow:0 2px 0 rgba(0,0,0,.25);position:relative;cursor:grab;-webkit-user-select:none;user-select:none}
+  .card:active{cursor:grabbing}
+  .num{position:absolute;top:12px;left:12px;background:var(--pitch);color:var(--chalk);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;line-height:1;padding:5px 7px;border-radius:3px;z-index:2;letter-spacing:.03em;min-width:26px;text-align:center}
+  .conf{position:absolute;top:12px;right:12px;background:rgba(14,59,46,.08);color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:10px;line-height:1;padding:4px 6px;border-radius:3px;z-index:2;letter-spacing:.06em}
+  .photo{width:100%;aspect-ratio:3/3.4;background:#dfe6df;border-radius:4px;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative;pointer-events:none}
+  .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+  .photo .ph{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:42px;color:#9aa89e}
+  .flagline{display:flex;align-items:center;gap:6px;margin:9px 2px 2px;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .flagline .flag{font-size:16px}
+  .name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:21px;line-height:1.02;text-transform:uppercase;margin:2px 2px 4px}
+  .meta{font-size:11.5px;color:var(--muted);margin:0 2px;line-height:1.35}
+  .note{margin:7px 2px 0;font-size:10.5px;line-height:1.3;color:var(--alert);font-weight:600;border-top:1px dashed rgba(179,58,58,.4);padding-top:6px}
+  .ghost{opacity:.35}
+  .chosen{box-shadow:0 8px 22px rgba(0,0,0,.4)}
+  .drag{transform:rotate(-2deg)}
+  footer{text-align:center;padding:40px 20px 60px;color:#a7b5aa;font-size:12.5px;line-height:1.7}
+  @media print{
+    body{background:#fff;color:#000}header{background:#fff;color:#000;border-color:#000}
+    h1,.eyebrow{color:#000}.toolbar{display:none}main{padding-top:18px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">FIFA WORLD CUP 2026 &middot; USA / MEXICO / CANADA</div>
+  <h1>The 48 Gaffers</h1>
+  <p>Every head coach at the first 48-team World Cup. Drag to build your own ranking.</p>
+</header>
+
+<div class="toolbar">
+  <span class="hint" id="hint">Drag cards to re-rank &middot; on phone, press &amp; hold then drag</span>
+  <button class="btn" id="reset">Reset order</button>
+</div>
+
+<main><div class="grid" id="grid"></div></main>
+
+<footer>
+  Coach list per Soccerphile's World Cup 2026 managers page (July 2026). Photos from Wikipedia / Wikimedia Commons, stored in this repo.<br>
+  Your ranking is saved on this device. Use Print &rarr; Save as PDF to share a snapshot of your order.
+</footer>
+
+<script>
+const CONFS = [
+  {name:"CONCACAF", teams:[
+    {c:"United States",f:"\u{1F1FA}\u{1F1F8}",coach:"Mauricio Pochettino",nat:"Argentina",since:"Sep 2024"},
+    {c:"Mexico",f:"\u{1F1F2}\u{1F1FD}",coach:"Javier Aguirre",nat:"Mexico",since:"Jul 2024"},
+    {c:"Canada",f:"\u{1F1E8}\u{1F1E6}",coach:"Jesse Marsch",nat:"USA",since:"May 2024"},
+    {c:"Cura\u00e7ao",f:"\u{1F1E8}\u{1F1FC}",coach:"Dick Advocaat",nat:"Netherlands",since:"Jan 2024",note:"Stepped away Feb 2026 (family health); returned May 2026"},
+    {c:"Haiti",f:"\u{1F1ED}\u{1F1F9}",coach:"S\u00e9bastien Mign\u00e9",nat:"France",since:"Jun 2024"},
+    {c:"Panama",f:"\u{1F1F5}\u{1F1E6}",coach:"Thomas Christiansen",nat:"Spain / Denmark",since:"Jul 2020"},
+  ]},
+  {name:"CONMEBOL", teams:[
+    {c:"Argentina",f:"\u{1F1E6}\u{1F1F7}",coach:"Lionel Scaloni",nat:"Argentina",since:"Nov 2018"},
+    {c:"Brazil",f:"\u{1F1E7}\u{1F1F7}",coach:"Carlo Ancelotti",nat:"Italy",since:"May 2025"},
+    {c:"Uruguay",f:"\u{1F1FA}\u{1F1FE}",coach:"Marcelo Bielsa",nat:"Argentina",since:"May 2023"},
+    {c:"Colombia",f:"\u{1F1E8}\u{1F1F4}",coach:"N\u00e9stor Lorenzo",nat:"Argentina",since:"Jul 2022"},
+    {c:"Ecuador",f:"\u{1F1EA}\u{1F1E8}",coach:"Sebasti\u00e1n Beccacece",nat:"Argentina",since:"Aug 2024"},
+    {c:"Paraguay",f:"\u{1F1F5}\u{1F1FE}",coach:"Gustavo Alfaro",nat:"Argentina",since:"Aug 2024"},
+  ]},
+  {name:"UEFA", teams:[
+    {c:"England",f:"\u{1F3F4}\u{E0067}\u{E0062}\u{E0065}\u{E006E}\u{E0067}\u{E007F}",coach:"Thomas Tuchel",nat:"Germany",since:"Jan 2025"},
+    {c:"France",f:"\u{1F1EB}\u{1F1F7}",coach:"Didier Deschamps",nat:"France",since:"Jul 2012"},
+    {c:"Germany",f:"\u{1F1E9}\u{1F1EA}",coach:"Julian Nagelsmann",nat:"Germany",since:"Sep 2023"},
+    {c:"Spain",f:"\u{1F1EA}\u{1F1F8}",coach:"Luis de la Fuente",nat:"Spain",since:"Dec 2022"},
+    {c:"Portugal",f:"\u{1F1F5}\u{1F1F9}",coach:"Roberto Mart\u00ednez",nat:"Spain",since:"Jan 2023"},
+    {c:"Netherlands",f:"\u{1F1F3}\u{1F1F1}",coach:"Ronald Koeman",nat:"Netherlands",since:"Jan 2023"},
+    {c:"Belgium",f:"\u{1F1E7}\u{1F1EA}",coach:"Rudi Garcia",nat:"France",since:"Jan 2025"},
+    {c:"Croatia",f:"\u{1F1ED}\u{1F1F7}",coach:"Zlatko Dali\u0107",nat:"Croatia",since:"Oct 2017"},
+    {c:"Switzerland",f:"\u{1F1E8}\u{1F1ED}",coach:"Murat Yakin",nat:"Switzerland",since:"Aug 2021"},
+    {c:"Austria",f:"\u{1F1E6}\u{1F1F9}",coach:"Ralf Rangnick",nat:"Germany",since:"May 2022"},
+    {c:"Scotland",f:"\u{1F3F4}\u{E0067}\u{E0062}\u{E0073}\u{E0063}\u{E0074}\u{E007F}",coach:"Steve Clarke",nat:"Scotland",since:"May 2019"},
+    {c:"Norway",f:"\u{1F1F3}\u{1F1F4}",coach:"St\u00e5le Solbakken",nat:"Norway",since:"Dec 2020"},
+    {c:"Sweden",f:"\u{1F1F8}\u{1F1EA}",coach:"Graham Potter",nat:"England",since:"Oct 2025"},
+    {c:"T\u00fcrkiye",f:"\u{1F1F9}\u{1F1F7}",coach:"Vincenzo Montella",nat:"Italy",since:"Sep 2023"},
+    {c:"Bosnia & Herz.",f:"\u{1F1E7}\u{1F1E6}",coach:"Sergej Barbarez",nat:"Bosnia",since:"Apr 2024"},
+    {c:"Czechia",f:"\u{1F1E8}\u{1F1FF}",coach:"Miroslav Koubek",nat:"Czechia",since:"Dec 2025"},
+  ]},
+  {name:"CAF", teams:[
+    {c:"Morocco",f:"\u{1F1F2}\u{1F1E6}",coach:"Mohamed Ouahbi",nat:"Morocco / Belgium",since:"Mar 2026",note:"Replaced Walid Regragui after AFCON 2025"},
+    {c:"Senegal",f:"\u{1F1F8}\u{1F1F3}",coach:"Pape Thiaw",nat:"Senegal",since:"Dec 2024"},
+    {c:"Egypt",f:"\u{1F1EA}\u{1F1EC}",coach:"Hossam Hassan",nat:"Egypt",since:"Feb 2024"},
+    {c:"Algeria",f:"\u{1F1E9}\u{1F1FF}",coach:"Vladimir Petkovi\u0107",nat:"Bosnia & Herzegovina",since:"Feb 2024"},
+    {c:"Tunisia",f:"\u{1F1F9}\u{1F1F3}",coach:"Herv\u00e9 Renard",nat:"France",since:"Jun 2026",note:"Hired mid-tournament after Sabri Lamouchi was sacked following one WC match — a first"},
+    {c:"Ghana",f:"\u{1F1EC}\u{1F1ED}",coach:"Carlos Queiroz",nat:"Portugal",since:"Apr 2026",note:"Replaced Otto Addo, sacked 72 days before kickoff"},
+    {c:"Ivory Coast",f:"\u{1F1E8}\u{1F1EE}",coach:"Emerse Fa\u00e9",nat:"Ivory Coast",since:"Jan 2024"},
+    {c:"South Africa",f:"\u{1F1FF}\u{1F1E6}",coach:"Hugo Broos",nat:"Belgium",since:"May 2021"},
+    {c:"Cape Verde",f:"\u{1F1E8}\u{1F1FB}",coach:"Bubista",nat:"Cape Verde",since:"Jan 2020"},
+    {c:"DR Congo",f:"\u{1F1E8}\u{1F1E9}",coach:"S\u00e9bastien Desabre",nat:"France",since:"Aug 2022"},
+  ]},
+  {name:"AFC", teams:[
+    {c:"Japan",f:"\u{1F1EF}\u{1F1F5}",coach:"Hajime Moriyasu",nat:"Japan",since:"Jul 2018"},
+    {c:"South Korea",f:"\u{1F1F0}\u{1F1F7}",coach:"Hong Myung-bo",nat:"South Korea",since:"Jul 2024"},
+    {c:"Australia",f:"\u{1F1E6}\u{1F1FA}",coach:"Tony Popovic",nat:"Australia",since:"Sep 2024"},
+    {c:"Iran",f:"\u{1F1EE}\u{1F1F7}",coach:"Amir Ghalenoei",nat:"Iran",since:"Mar 2023"},
+    {c:"Uzbekistan",f:"\u{1F1FA}\u{1F1FF}",coach:"Fabio Cannavaro",nat:"Italy",since:"Oct 2025"},
+    {c:"Jordan",f:"\u{1F1EF}\u{1F1F4}",coach:"Jamal Sellami",nat:"Morocco",since:"Aug 2024"},
+    {c:"Qatar",f:"\u{1F1F6}\u{1F1E6}",coach:"Julen Lopetegui",nat:"Spain",since:"May 2025"},
+    {c:"Iraq",f:"\u{1F1EE}\u{1F1F6}",coach:"Graham Arnold",nat:"Australia",since:"May 2025"},
+    {c:"Saudi Arabia",f:"\u{1F1F8}\u{1F1E6}",coach:"Giorgos Donis",nat:"Greece",since:"Apr 2026",note:"Replaced Herv\u00e9 Renard, sacked April 2026"},
+  ]},
+  {name:"OFC", teams:[
+    {c:"New Zealand",f:"\u{1F1F3}\u{1F1FF}",coach:"Darren Bazeley",nat:"England",since:"Nov 2022"},
+  ]},
+];
+
+// Flatten into a canonical list; id (01..48) is permanent and matches images/NN.jpg
+const COACHES = [];
+let seq = 0;
+CONFS.forEach(conf => conf.teams.forEach(t => {
+  seq++;
+  COACHES.push(Object.assign({id:String(seq).padStart(2,"0"), conf:conf.name}, t));
+}));
+
+const STORAGE_KEY = "wc26-gaffers-order";
+const grid = document.getElementById("grid");
+
+function loadOrder(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    const ids = JSON.parse(raw);
+    if(Array.isArray(ids) && ids.length) return ids;
+  }catch(e){}
+  return null;
+}
+function saveOrder(){
+  try{
+    const ids = [...grid.children].map(el => el.dataset.id);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+  }catch(e){}
+}
+
+function cardHTML(t){
+  const initials = t.coach.split(" ").map(w=>w[0]).slice(0,2).join("");
+  const el = document.createElement("div");
+  el.className = "card";
+  el.dataset.id = t.id;
+  el.innerHTML = `
+    <div class="num"></div>
+    <div class="conf">${t.conf}</div>
+    <div class="photo">
+      <span class="ph">${initials}</span>
+      <img src="images/${t.id}.jpg" alt="${t.coach}" loading="lazy" onerror="this.remove()">
+    </div>
+    <div class="flagline"><span class="flag">${t.f}</span>${t.c}</div>
+    <div class="name">${t.coach}</div>
+    <div class="meta">${t.nat} &middot; in charge since ${t.since}</div>
+    ${t.note ? `<div class="note">${t.note}</div>` : ""}
+  `;
+  return el;
+}
+
+function updateRanks(){
+  [...grid.children].forEach((el,i) => { el.querySelector(".num").textContent = i+1; });
+}
+
+function render(order){
+  grid.innerHTML = "";
+  const byId = {};
+  COACHES.forEach(t => byId[t.id] = t);
+  let ids = COACHES.map(t => t.id);
+  if(order){
+    const known = order.filter(id => byId[id]);
+    const missing = ids.filter(id => !known.includes(id));
+    ids = [...known, ...missing];
+  }
+  ids.forEach(id => grid.appendChild(cardHTML(byId[id])));
+  updateRanks();
+}
+
+render(loadOrder());
+
+// Enable drag-to-reorder (SortableJS). Degrades gracefully if the CDN is blocked.
+if(typeof Sortable !== "undefined"){
+  new Sortable(grid, {
+    animation:150,
+    delay:160, delayOnTouchOnly:true, touchStartThreshold:6,
+    ghostClass:"ghost", chosenClass:"chosen", dragClass:"drag",
+    onEnd:() => { updateRanks(); saveOrder(); }
+  });
+} else {
+  document.getElementById("hint").textContent = "Drag unavailable (couldn't load the drag library)";
+}
+
+document.getElementById("reset").addEventListener("click", () => {
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+  render(null);
+});
+</script>
+</body>
+</html>
